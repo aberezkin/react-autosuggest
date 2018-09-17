@@ -805,6 +805,10 @@ var _initialiseProps = function _initialiseProps() {
       _this4.justSelectedSuggestion = true;
     }
 
+    if (event.target === _this4.pressedSuggestion) {
+      _this4.justSelectedSuggestion = true;
+    }
+
     _this4.justMouseEntered = true;
 
     setTimeout(function() {
@@ -818,17 +822,17 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onDocumentMouseUp = function() {
     if (_this4.pressedSuggestion && !_this4.justSelectedSuggestion) {
-      _this4.pressedSuggestion = null;
       _this4.input.focus();
     }
+    _this4.pressedSuggestion = null;
   };
 
-  this.onSuggestionMouseDown = function(e) {
+  this.onSuggestionMouseDown = function(event) {
     // Checking if this.justSelectedSuggestion is already true to not duplicate touch events in chrome
     // See: https://github.com/facebook/react/issues/9809#issuecomment-413978405
     if (!_this4.justSelectedSuggestion) {
       _this4.justSelectedSuggestion = true;
-      _this4.pressedSuggestion = e.target;
+      _this4.pressedSuggestion = event.target;
     }
   };
 
@@ -923,11 +927,12 @@ var _initialiseProps = function _initialiseProps() {
       });
   };
 
-  this.onSuggestionMouseLeave = function(e) {
+  this.onSuggestionMouseLeave = function(event) {
     _this4.resetHighlightedSuggestion(false); // shouldResetValueBeforeUpDown
+
     if (
       _this4.justSelectedSuggestion &&
-      e.target === _this4.pressedSuggestion
+      event.target === _this4.pressedSuggestion
     ) {
       _this4.justSelectedSuggestion = false;
     }
