@@ -211,6 +211,7 @@ export const clickSuggestion = suggestionIndex => {
   mouseEnterSuggestion(suggestionIndex);
   mouseDownDocument(suggestion);
   mouseDownSuggestion(suggestionIndex);
+  mouseUpDocument(suggestion);
   blurInput();
   focusInput();
   Simulate.click(suggestion);

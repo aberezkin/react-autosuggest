@@ -340,6 +340,10 @@ export default class Autosuggest extends Component {
       this.justSelectedSuggestion = true;
     }
 
+    if (event.target === this.pressedSuggestion) {
+      this.justSelectedSuggestion = true;
+    }
+
     this.justMouseEntered = true;
 
     setTimeout(() => {
@@ -353,17 +357,17 @@ export default class Autosuggest extends Component {
 
   onDocumentMouseUp = () => {
     if (this.pressedSuggestion && !this.justSelectedSuggestion) {
-      this.pressedSuggestion = null;
       this.input.focus();
     }
+    this.pressedSuggestion = null;
   };
 
-  onSuggestionMouseDown = e => {
+  onSuggestionMouseDown = event => {
     // Checking if this.justSelectedSuggestion is already true to not duplicate touch events in chrome
     // See: https://github.com/facebook/react/issues/9809#issuecomment-413978405
     if (!this.justSelectedSuggestion) {
       this.justSelectedSuggestion = true;
-      this.pressedSuggestion = e.target;
+      this.pressedSuggestion = event.target;
     }
   };
 
@@ -446,9 +450,13 @@ export default class Autosuggest extends Component {
     onBlur && onBlur(this.blurEvent, { highlightedSuggestion });
   };
 
-  onSuggestionMouseLeave = e => {
+  onSuggestionMouseLeave = event => {
     this.resetHighlightedSuggestion(false); // shouldResetValueBeforeUpDown
-    if (this.justSelectedSuggestion && e.target === this.pressedSuggestion) {
+
+    if (
+      this.justSelectedSuggestion &&
+      event.target === this.pressedSuggestion
+    ) {
       this.justSelectedSuggestion = false;
     }
   };
